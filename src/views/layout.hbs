@@ -16,17 +16,18 @@
 
 		async function refresh()
 		{
-			const resp = await fetch( window.location );
-			if( resp.ok )
-				document.getElementById( "scriptView" ).innerHTML = await resp.json();
+			const res = await fetch( window.location );
+			if( res.ok )
+				document.getElementById( "scriptView" ).innerHTML = await res.json();
 		}
 
 		document.addEventListener( "DOMContentLoaded", () =>
 		{
 			if( document.getElementById( "scriptView" ) )
-			{
-				setInterval( refresh, 5000 );
-			}
+				setInterval( refresh, 2500 );
+
+			if( document.getElementById( "scriptEditor" ) )
+				document.getElementById( "scriptEditor" ).addEventListener( "input", update );
 		} );
 	</script>
 </head>

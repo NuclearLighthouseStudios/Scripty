@@ -1,10 +1,16 @@
 <form id="form" method="POST">
-<textarea name="script" oninput="update()">
-# Welcome to Scripty, the stupid teleprompter!
+<textarea name="script" id="scriptEditor">
+Welcome to Scripty, the stupid teleprompter!
+============================================
 
+{{#if scripts.length}}
 Current Scripts:
 
-{{#each scripts}} * {{this}}
+{{#each scripts}} - {{this}}
 {{/each}}
+
+
+{{/if}}
+    `\{^°-°^}/~ &lt;3 Scripty loves you!`
 </textarea>
 </form>

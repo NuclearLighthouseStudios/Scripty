@@ -15,7 +15,7 @@ function get( req, res, next )
 			},
 			html: () =>
 			{
-				res.render( "index", { scripts: scripts.keys() } );
+				res.render( "index", { scripts: Array.from(scripts.keys()) } );
 			}
 		} );
 }
@@ -26,7 +26,17 @@ function post( req, res, next )
 
 	scripts.set( id, req.body.script );
 
-	res.redirect( `/${id}` );
+	res.format(
+		{
+			json: () =>
+			{
+				res.json( id )
+			},
+			html: () =>
+			{
+				res.redirect( `/${id}` );
+			}
+		} );
 }
 
 router.get( "/", get );
