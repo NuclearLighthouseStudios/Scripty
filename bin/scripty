@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+
+const config = require( "../config/config.json" );
+
+const http = require( "http" );
+const scripty = require( "../src/scripty" );
+
+scripty.set( "port", config.port );
+const scriptyServer = http.createServer( scripty );
+
+
+scriptyServer.on( "error", ( err ) =>
+{
+	console.error( "Unable to start up server", err );
+	process.exit( 1 );
+} );
+
+
+scriptyServer.on( "listening", () =>
+{
+	var addr = scriptyServer.address();
+	console.log( `Scripty listening on port ${addr.port}` );
+} );
+
+scriptyServer.listen( config.port );

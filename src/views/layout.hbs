@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Scripty{{#if scriptId}} - {{scriptId}}{{/if}}</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="/static/style.css">
+	<script>
+		var updateTimeout;
+		function update()
+		{
+			clearTimeout( updateTimeout );
+			updateTimeout = setTimeout( () => { document.forms.form.submit() }, 2500 );
+		}
+
+		async function refresh()
+		{
+			const resp = await fetch( window.location );
+			if( resp.ok )
+				document.getElementById( "scriptView" ).innerHTML = await resp.json();
+		}
+
+		document.addEventListener( "DOMContentLoaded", () =>
+		{
+			if( document.getElementById( "scriptView" ) )
+			{
+				setInterval( refresh, 5000 );
+			}
+		} );
+	</script>
+</head>
+
+<body>
+	{{{body}}}
+</body>
+
+</html>
