@@ -2,7 +2,7 @@
   "name": "scripty",
   "version": "1.0.0",
   "description": "The stupid teleprompter!",
-  "author": "Slyka",
+  "author": "Kris Slyka",
   "license": "MIT",
   "scripts": {
     "start": "node ./bin/scripty"
