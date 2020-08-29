@@ -1,11 +1,42 @@
 #!/usr/bin/env node
 
-const config = require( "../config/config.json" );
-
+const ArgumentParser = require( "argparse" ).ArgumentParser;
 const http = require( "http" );
-const scripty = require( "../src/scripty" );
 
-scripty.set( "port", config.port );
+const scripty = require( "../src/scripty" );
+const package = require( "./../package.json" );
+
+var parser = new ArgumentParser(
+	{
+		prog: package.name,
+		description: package.description,
+		add_help: true,
+		epilog: "\\{^°-°^}/~ <3"
+	} );
+
+parser.add_argument( "-v", "--version",
+	{
+		action: "version",
+		version: package.version
+	}
+);
+
+parser.add_argument( "-p", "--port",
+	{
+		type: "int",
+		help: "port to listen on, default is 1337",
+		default: 1337
+	}
+);
+
+parser.add_argument( "-b", "--bind",
+	{
+		help: "bind to a specific interface"
+	}
+);
+
+const args = parser.parse_args();
+
 const scriptyServer = http.createServer( scripty );
 
 
@@ -18,8 +49,8 @@ scriptyServer.on( "error", ( err ) =>
 
 scriptyServer.on( "listening", () =>
 {
-	var addr = scriptyServer.address();
-	console.log( `Scripty listening on port ${addr.port}` );
+	const addr = scriptyServer.address();
+	console.log( `Scripty listening on ${addr.address} port ${addr.port}` );
 } );
 
-scriptyServer.listen( config.port );
+scriptyServer.listen( args.port, args.bind );
